@@ -1,33 +1,32 @@
-import { useState } from "react";
+import React from 'react';
+import { useState } from 'react';
+
 
 export const AddCategory = ({ onNewCategory }) => {
-  const [inputValue, setinputValue] = useState("");
 
-  const handleInputChange = ({ target }) => {
-    // console.log(target.value);
-    setinputValue(target.value);
-  };
+    const [ inputValue, setInputValue ] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    //Quitamos los espacios en blanco al inicio y al final con el método trim()
-    const newInputValue = inputValue.trim().toUpperCase();
-    //Evita agregar un elemento si esta en blanco el input
-    if (newInputValue.length <= 1) return;
-    //Se inserta un elemento si se cumplio la condición anterior
-    onNewCategory(newInputValue);
-    //Para que nuestro input quede limpio
-    setinputValue("");
-  };
+    const onInputChange = ({ target }) => {
+        setInputValue( target.value );
+    }
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        typeof="text"
-        placeholder="Buscar Gifs"
-        value={inputValue}
-        onChange={handleInputChange}
-      />
-    </form>
-  );
-};
+    const onSubmit = ( event ) => {
+        event.preventDefault();
+        if( inputValue.trim().length <= 1) return;
+
+        // setCategories( categories => [ inputValue, ...categories ]);
+        setInputValue('');
+        onNewCategory( inputValue.trim() );
+    }
+
+    return (
+        <form onSubmit={ onSubmit }>
+            <input 
+                type="text"
+                placeholder="Buscar gifs"
+                value={ inputValue }
+                onChange={ onInputChange }
+            />
+        </form>
+    )
+}
